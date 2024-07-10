@@ -16,25 +16,16 @@ const resizeFont = () =>{
   else text_input.style.fontSize = text_output.style.fontSize = '16px'
 }
 
-
-text_input.addEventListener('input', () => {
-  
-  resizeFont()
-  
-  text_output.value = ''
-  
-  for (let i = 0; i < text_input.value.length; i++) {
-    text_output.value += getTranslate(text_input.value[i])
-  }
-})
-
-text_output.addEventListener('input', () => {
+const textareaHundler = (input: HTMLTextAreaElement, output: HTMLTextAreaElement) => {
 
   resizeFont()
-
-  text_input.value = ''
   
-  for (let i = 0; i < text_output.value.length; i++) {
-    text_input.value += getTranslate(text_output.value[i])
-  }
-})
+  output.value = ''
+  
+  for (let i = 0; i < input.value.length; i++) 
+  output.value += getTranslate(input.value, input.value[i], i)
+}
+
+text_input.addEventListener('input', () => textareaHundler(text_input, text_output))
+
+text_output.addEventListener('input', () => textareaHundler(text_output, text_input))
